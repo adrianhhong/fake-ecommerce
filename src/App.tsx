@@ -1,17 +1,15 @@
 import client from "./client";
-import { ProductType } from "./client/types";
+import { ProductType, CartType, CartItemType } from "./client/types";
 import Item from "./components/item/Item";
 import AppBar from "./components/app-bar/AppBar";
+import Cart from "./components/cart/Cart";
 import { useState, useEffect } from "react";
-import { LinearProgress, Grid } from "@mui/material";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { Grid, Drawer } from "@mui/material";
 
 const App = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
-  // const { isLoading, isError, data, error } = useQuery(
-  //   "products",
-  //   client.getProducts
-  // );
+  const [cartIsOpen, setCartIsOpen] = useState(false);
+  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
 
   useEffect(() => {
     (async function getProducts() {
@@ -20,17 +18,49 @@ const App = () => {
         setProducts(products);
       }
     })();
-  }, []);
+    (async function getCart() {
+      const cart = await client.getCart(1);
+      if (cart != null) {
+        const mappedCartItems = cart.products.map((p) => {
+          const product = products.find((item) => item.id === p.productId);
+          if (product != null) return { ...product, quantity: p.quantity };
+          return {
+            id: 999,
+            title: "Unknown",
+            price: 0,
+            category: "Unknown",
+            description: "Unkown",
+            image: "",
+            quantity: 0,
+          };
+        });
+        setCartItems(mappedCartItems);
+      }
+    })();
+  }, [products]);
+
+  const handleRemoveFromCart = () => {};
 
   return (
     <div>
-      <AppBar />
-      {/* {isLoading ? <LinearProgress /> : <div></div>}
-      {isError ? <p>Something went wrong</p> : <div></div>} */}
+      <AppBar
+        cartItems={cartItems.length}
+        clickCart={() => setCartIsOpen(true)}
+      />
+      <Drawer
+        anchor="right"
+        open={cartIsOpen}
+        onClose={() => setCartIsOpen(false)}
+      >
+        <Cart
+          cartItems={cartItems}
+          removeFromCart={handleRemoveFromCart}
+        ></Cart>
+      </Drawer>
 
       <Grid container spacing={{ xs: 2 }}>
-        {products.map((p, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
+        {products?.map((p, index) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={index}>
             <Item item={p}></Item>
           </Grid>
         ))}

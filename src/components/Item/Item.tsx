@@ -4,9 +4,7 @@ import {
   CardMedia,
   Typography,
   CardActionArea,
-  CardActions,
   Chip,
-  Button,
 } from "@mui/material";
 import { ProductType } from "../../client/types";
 
@@ -41,11 +39,6 @@ const Item: React.FC<Props> = ({ item }) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Add to Cart
-        </Button>
-      </CardActions>
     </Card>
   );
 };
