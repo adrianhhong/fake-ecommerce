@@ -1,5 +1,5 @@
 import client from "./client";
-import { ProductType, CartType, CartItemType } from "./client/types";
+import { ProductType, CartItemType } from "./client/types";
 import Item from "./components/item/Item";
 import AppBar from "./components/app-bar/AppBar";
 import Cart from "./components/cart/Cart";
@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { Grid, Drawer } from "@mui/material";
 
 const App = () => {
+  const loggedInUser = 1;
   const [products, setProducts] = useState<ProductType[]>([]);
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
@@ -18,8 +19,11 @@ const App = () => {
         setProducts(products);
       }
     })();
+  }, []);
+
+  useEffect(() => {
     (async function getCart() {
-      const cart = await client.getCart(1);
+      const cart = await client.getCart(loggedInUser);
       if (cart != null) {
         const mappedCartItems = cart.products.map((p) => {
           const product = products.find((item) => item.id === p.productId);
