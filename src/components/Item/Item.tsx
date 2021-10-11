@@ -4,6 +4,9 @@ import {
   CardMedia,
   Typography,
   CardActionArea,
+  CardActions,
+  Chip,
+  Button,
 } from "@mui/material";
 import { ProductType } from "../../client/types";
 
@@ -13,7 +16,11 @@ type Props = {
 
 const Item: React.FC<Props> = ({ item }) => {
   return (
-    <Card sx={{ maxWidth: 500 }}>
+    <Card
+      sx={{
+        height: 700,
+      }}
+    >
       <CardActionArea>
         <CardMedia
           component="img"
@@ -22,6 +29,10 @@ const Item: React.FC<Props> = ({ item }) => {
           alt={item.title}
         />
         <CardContent>
+          <Typography gutterBottom variant="h4" component="div">
+            ${item.price}
+          </Typography>
+          <Chip label={item.category} variant="outlined"></Chip>
           <Typography gutterBottom variant="h5" component="div">
             {item.title}
           </Typography>
@@ -30,6 +41,11 @@ const Item: React.FC<Props> = ({ item }) => {
           </Typography>
         </CardContent>
       </CardActionArea>
+      <CardActions>
+        <Button size="small" color="primary">
+          Add to Cart
+        </Button>
+      </CardActions>
     </Card>
   );
 };

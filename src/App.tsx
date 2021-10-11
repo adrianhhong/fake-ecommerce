@@ -1,8 +1,9 @@
 import client from "./client";
 import { ProductType } from "./client/types";
-import Item from "./components/Item/Item";
+import Item from "./components/item/Item";
+import AppBar from "./components/app-bar/AppBar";
 import { useState, useEffect } from "react";
-import { LinearProgress } from "@mui/material";
+import { LinearProgress, Grid } from "@mui/material";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 const App = () => {
@@ -15,8 +16,6 @@ const App = () => {
   useEffect(() => {
     (async function getProducts() {
       const products = await client.getProducts();
-      console.log(products);
-
       if (products != null) {
         setProducts(products);
       }
@@ -24,13 +23,18 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
+    <div>
+      <AppBar />
       {/* {isLoading ? <LinearProgress /> : <div></div>}
       {isError ? <p>Something went wrong</p> : <div></div>} */}
 
-      {products.map((p) => (
-        <Item item={p} />
-      ))}
+      <Grid container spacing={{ xs: 2 }}>
+        {products.map((p, index) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
+            <Item item={p}></Item>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };
