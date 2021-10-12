@@ -1,6 +1,6 @@
 import { ProfileType } from "../client/types";
 import client from "../client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import {
   Box,
   AppBar,
@@ -11,6 +11,9 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import BasicAppBar from "../components/app-bar/BasicAppBar";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Profile = () => {
   const loggedInUser = 1;
@@ -41,22 +44,24 @@ const Profile = () => {
     useState<ProfileType>(unloadedUser);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [snackbarIsOpen, setSnackbarIsOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   async function getProfile() {
+    setIsLoading(true);
     const newProfile = await client.getProfile(loggedInUser);
     if (newProfile != null) {
       setProfile(newProfile);
       setOriginalProfile(newProfile);
     }
+    setIsLoading(false);
   }
 
   // Get Profile
   useEffect(() => {
-    setIsLoading(true);
     (async function profileGetter() {
       await getProfile();
     })();
-    setIsLoading(false);
   }, []);
 
   const handleOnBasicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +93,15 @@ const Profile = () => {
 
   const handleSaveEdit = async () => {
     // This doesn't actually PATCH the profile, but we can console.log what we PATCHed
-    console.log(await client.patchProfile(loggedInUser, profile));
+    const resProfile = await client.patchProfile(loggedInUser, profile);
+    if (resProfile) {
+      setSnackbarMessage(
+        `Successfully edited profile. This does not update any database, but the response of the update is: ${JSON.stringify(
+          resProfile
+        )}`
+      );
+      setSnackbarIsOpen(true);
+    }
     getProfile();
     setIsEditMode(false);
   };
@@ -97,6 +110,29 @@ const Profile = () => {
     setProfile(originalProfile);
     setIsEditMode(false);
   };
+
+  const handleClose = (
+    event: React.SyntheticEvent | React.MouseEvent,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarIsOpen(false);
+  };
+
+  const action = (
+    <Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Fragment>
+  );
 
   return (
     <div>
@@ -115,9 +151,6 @@ const Profile = () => {
       <Link to="/">
         <Button color="inherit">Return to Home</Button>
       </Link>
-      <Box sx={{ width: "100%" }}>
-        <LinearProgress />
-      </Box>
       <TextField
         onChange={handleOnNameChange}
         id="firstname"
@@ -208,21 +241,27 @@ const Profile = () => {
         disabled={!isEditMode}
         fullWidth
       />
-      {!isEditMode && (
+      {!isEditMode && !isLoading && (
         <Button color="inherit" onClick={() => setIsEditMode(true)}>
           EDIT
         </Button>
       )}
-      {isEditMode && (
+      {isEditMode && !isLoading && (
         <Button color="inherit" onClick={handleSaveEdit}>
           SAVE
         </Button>
       )}
-      {isEditMode && (
+      {isEditMode && !isLoading && (
         <Button color="inherit" onClick={handleCancelEdit}>
           CANCEL
         </Button>
       )}
+      <Snackbar
+        open={snackbarIsOpen}
+        onClose={handleClose}
+        message={snackbarMessage}
+        action={action}
+      />
     </div>
   );
 };

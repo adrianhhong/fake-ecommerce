@@ -1,5 +1,10 @@
 import client from "../client";
-import { ProductType, CartItemType, CategoryType } from "../client/types";
+import {
+  ProductType,
+  CartType,
+  CartItemType,
+  CategoryType,
+} from "../client/types";
 import Item from "../components/item/Item";
 import ExtraAppBar from "../components/app-bar/ExtraAppBar";
 import Cart from "../components/cart/Cart";
@@ -11,14 +16,16 @@ const Main = () => {
   const loggedInUser = 1;
   const [allProducts, setAllProducts] = useState<ProductType[]>([]);
   const [cartIsOpen, setCartIsOpen] = useState(false);
+  const [cart, setCart] = useState<CartType>({} as CartType);
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [displayedProducts, setDisplayedProducts] = useState<ProductType[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+  const [isLoadingCart, setIsLoadingCart] = useState(false);
 
   // Get allProducts, load allCategories
   useEffect(() => {
-    setIsLoading(true);
+    setIsLoadingProducts(true);
     (async function getProducts() {
       const allProducts = await client.getProducts();
       if (allProducts != null) {
@@ -35,41 +42,50 @@ const Main = () => {
         });
         setCategories(categories);
       }
-      setIsLoading(false);
+      setIsLoadingProducts(false);
     })();
   }, []);
 
   // Get cart
-  // TODO: Figure out why it is erroring here
+  const getCart = async () => {
+    setIsLoadingCart(true);
+    const newCart = await client.getCart(loggedInUser);
+    if (newCart != null) {
+      setCart(newCart);
+    }
+    setIsLoadingCart(false);
+  };
+
+  // Get cart on mount so we can show amount of items in cart
   useEffect(() => {
-    setIsLoading(true);
-    (async function getCart() {
-      const cart = await client.getCart(loggedInUser);
-      if (cart != null) {
-        const mappedCartItems = cart.products.map((p) => {
-          const product = allProducts.find((item) => item.id === p.productId);
-          if (product != null) return { ...product, quantity: p.quantity };
-          // Probably could improve this
-          return {
-            id: 0,
-            title: "",
-            price: 0,
-            category: "",
-            description: "",
-            image: "",
-            quantity: 0,
-          };
-        });
-        setCartItems(mappedCartItems);
-      }
-      setIsLoading(false);
+    (async function cartGetter() {
+      getCart();
     })();
-  }, [allProducts]);
+  }, []);
+
+  // Map cartItems
+  useEffect(() => {
+    const mappedCartItems = cart?.products?.map((p) => {
+      const product = allProducts.find((item) => item.id === p.productId);
+      if (product != null) return { ...product, quantity: p.quantity };
+      // Probably could improve this
+      return {
+        id: 0,
+        title: "",
+        price: 0,
+        category: "",
+        description: "",
+        image: "",
+        quantity: 0,
+      };
+    });
+    setCartItems(mappedCartItems);
+  }, [allProducts, cart]);
 
   // Load displayedProducts
   useEffect(() => {
-    const categoriesToDisplay = categories.filter((c) => c.isSelected);
-    if (categoriesToDisplay.length) {
+    const categoriesToDisplay = categories?.filter((c) => c.isSelected);
+    if (categoriesToDisplay?.length) {
       const productsToDisplay = allProducts.filter((p) => {
         return categoriesToDisplay.some((c) => c.category === p.category);
       });
@@ -93,10 +109,13 @@ const Main = () => {
   return (
     <div>
       <ExtraAppBar
-        cartItems={cartItems.length}
-        clickCart={() => setCartIsOpen(true)}
+        cartItems={cartItems?.length}
+        clickCart={() => {
+          getCart();
+          setCartIsOpen(true);
+        }}
       />
-      {isLoading && (
+      {isLoadingProducts && (
         <Box sx={{ width: "100%" }}>
           <LinearProgress />
         </Box>
@@ -106,6 +125,11 @@ const Main = () => {
         open={cartIsOpen}
         onClose={() => setCartIsOpen(false)}
       >
+        {isLoadingCart && (
+          <Box sx={{ width: "100%" }}>
+            <LinearProgress />
+          </Box>
+        )}
         <Cart
           cartItems={cartItems}
           removeFromCart={handleRemoveFromCart}
