@@ -1,11 +1,11 @@
 import client from "../client";
 import { ProductType, CartItemType, CategoryType } from "../client/types";
 import Item from "../components/item/Item";
-import AppBar from "../components/app-bar/AppBar";
+import ExtraAppBar from "../components/app-bar/ExtraAppBar";
 import Cart from "../components/cart/Cart";
 import Filter from "../components/filter/Filter";
 import { useState, useEffect } from "react";
-import { Grid, Drawer } from "@mui/material";
+import { Grid, Drawer, Box, LinearProgress } from "@mui/material";
 
 const Main = () => {
   const loggedInUser = 1;
@@ -14,9 +14,11 @@ const Main = () => {
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [displayedProducts, setDisplayedProducts] = useState<ProductType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Get allProducts, load allCategories
   useEffect(() => {
+    setIsLoading(true);
     (async function getProducts() {
       const allProducts = await client.getProducts();
       if (allProducts != null) {
@@ -33,11 +35,14 @@ const Main = () => {
         });
         setCategories(categories);
       }
+      setIsLoading(false);
     })();
   }, []);
 
   // Get cart
+  // TODO: Figure out why it is erroring here
   useEffect(() => {
+    setIsLoading(true);
     (async function getCart() {
       const cart = await client.getCart(loggedInUser);
       if (cart != null) {
@@ -57,6 +62,7 @@ const Main = () => {
         });
         setCartItems(mappedCartItems);
       }
+      setIsLoading(false);
     })();
   }, [allProducts]);
 
@@ -86,10 +92,15 @@ const Main = () => {
 
   return (
     <div>
-      <AppBar
+      <ExtraAppBar
         cartItems={cartItems.length}
         clickCart={() => setCartIsOpen(true)}
       />
+      {isLoading && (
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress />
+        </Box>
+      )}
       <Drawer
         anchor="right"
         open={cartIsOpen}

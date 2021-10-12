@@ -1,8 +1,16 @@
 import { ProfileType } from "../client/types";
 import client from "../client";
 import { useState, useEffect } from "react";
-import { TextField, Button } from "@mui/material";
+import {
+  Box,
+  AppBar,
+  TextField,
+  Button,
+  Toolbar,
+  LinearProgress,
+} from "@mui/material";
 import { Link } from "react-router-dom";
+import BasicAppBar from "../components/app-bar/BasicAppBar";
 
 const Profile = () => {
   const loggedInUser = 1;
@@ -32,6 +40,7 @@ const Profile = () => {
   const [originalProfile, setOriginalProfile] =
     useState<ProfileType>(unloadedUser);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function getProfile() {
     const newProfile = await client.getProfile(loggedInUser);
@@ -43,9 +52,11 @@ const Profile = () => {
 
   // Get Profile
   useEffect(() => {
+    setIsLoading(true);
     (async function profileGetter() {
       await getProfile();
     })();
+    setIsLoading(false);
   }, []);
 
   const handleOnBasicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,9 +100,24 @@ const Profile = () => {
 
   return (
     <div>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <BasicAppBar />
+          </Toolbar>
+        </AppBar>
+      </Box>
+      {isLoading && (
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress />
+        </Box>
+      )}
       <Link to="/">
         <Button color="inherit">Return to Home</Button>
       </Link>
+      <Box sx={{ width: "100%" }}>
+        <LinearProgress />
+      </Box>
       <TextField
         onChange={handleOnNameChange}
         id="firstname"
