@@ -1,4 +1,4 @@
-import { ProductType, CartType } from "./types";
+import { ProductType, CartType, ProfileType } from "./types";
 import server from "../config";
 
 class Client {
@@ -12,8 +12,7 @@ class Client {
       const res = await fetch(`${this.url}/products`, {
         method: "GET",
       });
-      const data: ProductType[] = await res.json();
-      return data;
+      return await res.json();
     } catch (e) {
       console.error(e);
     }
@@ -24,8 +23,34 @@ class Client {
       const res = await fetch(`${this.url}/carts/${id}`, {
         method: "GET",
       });
-      const data: CartType = await res.json();
-      return data;
+      return await res.json();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async getProfile(id: number): Promise<ProfileType | undefined> {
+    try {
+      const res = await fetch(`${this.url}/users/${id}`, {
+        method: "GET",
+      });
+      return await res.json();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async patchProfile(
+    id: number,
+    body: ProfileType
+  ): Promise<ProfileType | undefined> {
+    try {
+      const res = await fetch(`${this.url}/users/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(body),
+        headers: new Headers({ "content-type": "application/json" }),
+      });
+      return await res.json();
     } catch (e) {
       console.error(e);
     }

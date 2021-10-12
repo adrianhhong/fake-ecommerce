@@ -15,7 +15,7 @@ const Main = () => {
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [displayedProducts, setDisplayedProducts] = useState<ProductType[]>([]);
 
-  // Load allProducts
+  // Get allProducts, load allCategories
   useEffect(() => {
     (async function getProducts() {
       const allProducts = await client.getProducts();
@@ -36,7 +36,7 @@ const Main = () => {
     })();
   }, []);
 
-  // Load cart
+  // Get cart
   useEffect(() => {
     (async function getCart() {
       const cart = await client.getCart(loggedInUser);
@@ -46,11 +46,11 @@ const Main = () => {
           if (product != null) return { ...product, quantity: p.quantity };
           // Probably could improve this
           return {
-            id: 999,
-            title: "Unknown",
+            id: 0,
+            title: "",
             price: 0,
-            category: "Unknown",
-            description: "Unkown",
+            category: "",
+            description: "",
             image: "",
             quantity: 0,
           };

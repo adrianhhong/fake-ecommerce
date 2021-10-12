@@ -12,7 +12,7 @@ const Cart: React.FC<Props> = ({ cartItems, removeFromCart }) => {
       <h2>Shopping Cart</h2>
       {cartItems.length === 0 ? <p>You have no items.</p> : null}
       {cartItems.map((item) => (
-        <CartItem item={item} removeFromCart={removeFromCart} />
+        <CartItem item={item} removeFromCart={removeFromCart} key={item.id} />
       ))}
     </div>
   );
