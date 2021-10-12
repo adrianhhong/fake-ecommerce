@@ -4,7 +4,6 @@ import {
   CardMedia,
   Typography,
   CardActionArea,
-  Chip,
 } from "@mui/material";
 import { CartItemType } from "../../client/types";
 

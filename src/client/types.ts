@@ -20,3 +20,8 @@ export interface CartType {
 export interface CartItemType extends ProductType {
   quantity: number;
 }
+
+export interface CategoryType {
+  category: string;
+  isSelected: boolean;
+}
