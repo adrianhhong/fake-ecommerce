@@ -18,6 +18,10 @@ const Item: React.FC<Props> = ({ item }) => {
       sx={{
         height: 600,
         p: 1,
+        border: 2,
+        borderColor: "#ddd",
+        borderRadius: "2%",
+        boxShadow: "none",
       }}
     >
       <Box display="flex" justifyContent="center" alignItems="center">

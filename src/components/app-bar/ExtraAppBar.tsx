@@ -27,7 +27,7 @@ const ButtonAppBar: React.FC<Props> = ({ cartItems, clickCart }) => {
             sx={{ ml: 1 }}
             onClick={clickCart}
           >
-            <Badge badgeContent={cartItems} color="error"></Badge>
+            <Badge badgeContent={cartItems} color="secondary"></Badge>
             <ShoppingCartIcon />
           </IconButton>
         </Toolbar>

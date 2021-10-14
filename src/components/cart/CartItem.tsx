@@ -12,7 +12,12 @@ const CartItem: React.FC<Props> = ({ item }) => {
         sx={{
           height: 400,
           width: 400,
-          mt: 5,
+          mt: 3,
+          p: 1,
+          border: 2,
+          borderColor: "#ddd",
+          borderRadius: "2%",
+          boxShadow: "none",
         }}
       >
         <Box display="flex" justifyContent="center" alignItems="center">

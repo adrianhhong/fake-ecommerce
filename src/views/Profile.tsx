@@ -158,7 +158,7 @@ const Profile = () => {
               size="medium"
               color="secondary"
               aria-label="add"
-              sx={{ mb: 4, textTransform: "capitalize" }}
+              sx={{ mb: 4, textTransform: "capitalize", boxShadow: "none" }}
             >
               <ArrowBackIosNewIcon sx={{ mr: 1 }} />
               Return
@@ -272,7 +272,7 @@ const Profile = () => {
               size="medium"
               color="primary"
               aria-label="add"
-              sx={{ textTransform: "capitalize" }}
+              sx={{ textTransform: "capitalize", boxShadow: "none" }}
               onClick={() => setIsEditMode(true)}
             >
               Edit
@@ -284,7 +284,7 @@ const Profile = () => {
               size="medium"
               color="primary"
               aria-label="add"
-              sx={{ mr: 2, textTransform: "capitalize" }}
+              sx={{ mr: 2, textTransform: "capitalize", boxShadow: "none" }}
               onClick={handleSaveEdit}
             >
               Save
@@ -294,9 +294,8 @@ const Profile = () => {
             <Fab
               variant="extended"
               size="medium"
-              color="secondary"
               aria-label="add"
-              sx={{ textTransform: "capitalize" }}
+              sx={{ textTransform: "capitalize", boxShadow: "none" }}
               onClick={handleCancelEdit}
             >
               Cancel

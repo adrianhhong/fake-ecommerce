@@ -6,12 +6,12 @@ const BasicAppBar = () => {
   return (
     <>
       <Link to="/">
-        <IconButton size="large" edge="start" color="default" sx={{ mr: 2 }}>
+        <IconButton size="large" edge="start" color="secondary" sx={{ mr: 2 }}>
           <StorefrontIcon />
         </IconButton>
       </Link>
       <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-        Kwik-E-Comm
+        Fake E-commerce Site
       </Typography>
     </>
   );

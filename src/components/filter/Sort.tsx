@@ -13,14 +13,8 @@ const Sort: React.FC<Props> = ({ sortBy, onSortChange }) => {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={sortBy}
-          label="Sort By"
-          onChange={onSortChange}
-        >
+        <InputLabel>Sort By</InputLabel>
+        <Select value={sortBy} label="Sort By" onChange={onSortChange}>
           <MenuItem value={"default"}>Default</MenuItem>
           <MenuItem value={"priceAsc"}>Price: Low to high</MenuItem>
           <MenuItem value={"priceDes"}>Price: High to low</MenuItem>

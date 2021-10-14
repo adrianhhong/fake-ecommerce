@@ -13,6 +13,7 @@ import Search from "../components/filter/Search";
 import Sort from "../components/filter/Sort";
 import { useState, useEffect } from "react";
 import { Grid, Drawer, Box, LinearProgress } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { SelectChangeEvent } from "@mui/material/Select";
 
 const Main = () => {
@@ -152,19 +153,34 @@ const Main = () => {
         )}
         <Cart cartItems={cartItems}></Cart>
       </Drawer>
-      <Filter
-        categories={categories}
-        onCheckboxChange={handleCheckboxChange}
-      ></Filter>
-      <Search onSearchChange={handleSearchChange}></Search>
-      <Sort sortBy={sortBy} onSortChange={handleSortChange}></Sort>
-      <Grid container spacing={{ xs: 2 }}>
-        {displayedProducts?.map((p, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={index}>
-            <Item item={p}></Item>
-          </Grid>
-        ))}
-      </Grid>
+      <Box
+        display="flex"
+        justifyContent="end"
+        alignItems="center"
+        sx={{ m: 2 }}
+      >
+        <Search onSearchChange={handleSearchChange}></Search>{" "}
+        <Sort sortBy={sortBy} onSortChange={handleSortChange}></Sort>
+      </Box>
+      <Box display="flex" justifyContent="end" sx={{ m: 2 }}>
+        <Box sx={{ width: "15%" }}>
+          <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
+            Categories
+          </Typography>
+          <Filter
+            categories={categories}
+            onCheckboxChange={handleCheckboxChange}
+          ></Filter>
+        </Box>
+
+        <Grid container spacing={{ xs: 2 }}>
+          {displayedProducts?.map((p, index) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={index}>
+              <Item item={p}></Item>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </div>
   );
 };

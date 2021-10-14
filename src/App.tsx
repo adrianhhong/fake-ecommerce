@@ -6,11 +6,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#509ab5",
+      main: "#5a6283",
     },
     secondary: {
-      main: "#6b6b6b",
+      main: "#ffcdd5",
     },
+  },
+  typography: {
+    fontFamily: "Inter",
   },
 });
 
