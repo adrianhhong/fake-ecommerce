@@ -5,11 +5,11 @@ import {
   Box,
   AppBar,
   TextField,
-  Button,
   Toolbar,
   LinearProgress,
   Fab,
 } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import BasicAppBar from "../components/app-bar/BasicAppBar";
 import Snackbar from "@mui/material/Snackbar";
@@ -164,6 +164,9 @@ const Profile = () => {
               Return
             </Fab>
           </Link>
+          <Typography gutterBottom variant="h3" component="div">
+            Profile
+          </Typography>
           <TextField
             onChange={handleOnNameChange}
             id="firstname"
