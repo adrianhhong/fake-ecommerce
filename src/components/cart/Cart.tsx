@@ -1,6 +1,6 @@
 import { CartItemType } from "../../client/types";
 import CartItem from "./CartItem";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
 type Props = {
   cartItems: CartItemType[];
@@ -8,7 +8,7 @@ type Props = {
 
 const Cart: React.FC<Props> = ({ cartItems }) => {
   return (
-    <div style={{ padding: "30px" }}>
+    <Box sx={{ p: 1 }}>
       <Typography gutterBottom variant="h4" component="div">
         Shopping Cart
       </Typography>
@@ -16,7 +16,7 @@ const Cart: React.FC<Props> = ({ cartItems }) => {
       {cartItems?.map((item) => (
         <CartItem item={item} key={item.id} />
       ))}
-    </div>
+    </Box>
   );
 };
 

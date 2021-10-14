@@ -10,9 +10,9 @@ const CartItem: React.FC<Props> = ({ item }) => {
     <div>
       <Card
         sx={{
-          height: 400,
-          width: 400,
-          mt: 3,
+          height: { xs: 460, md: 400 },
+          width: { xs: 230, md: 400 },
+          mt: 1,
           p: 1,
           border: 2,
           borderColor: "#ddd",
