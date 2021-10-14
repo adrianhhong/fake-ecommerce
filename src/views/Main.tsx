@@ -12,8 +12,17 @@ import Filter from "../components/filter/Filter";
 import Search from "../components/filter/Search";
 import Sort from "../components/filter/Sort";
 import { useState, useEffect } from "react";
-import { Grid, Drawer, Box, LinearProgress } from "@mui/material";
+import {
+  Grid,
+  Drawer,
+  Box,
+  LinearProgress,
+  IconButton,
+  Card,
+} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import Popover from "@mui/material/Popover";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import { SelectChangeEvent } from "@mui/material/Select";
 
 const Main = () => {
@@ -28,6 +37,7 @@ const Main = () => {
   const [isLoadingCart, setIsLoadingCart] = useState(false);
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("default");
+  const [showFilter, setShowFilter] = useState(false);
 
   // Get allProducts, load allCategories
   useEffect(() => {
@@ -155,15 +165,31 @@ const Main = () => {
       </Drawer>
       <Box
         display="flex"
-        justifyContent="end"
+        justifyContent="space-between"
         alignItems="center"
         sx={{ m: 2 }}
       >
-        <Search onSearchChange={handleSearchChange}></Search>{" "}
-        <Sort sortBy={sortBy} onSortChange={handleSortChange}></Sort>
-      </Box>
-      <Box display="flex" justifyContent="end" sx={{ m: 2 }}>
-        <Box sx={{ width: "15%" }}>
+        <IconButton
+          size="large"
+          edge="start"
+          color="default"
+          onClick={() => setShowFilter(!showFilter)}
+        >
+          <FilterListIcon />
+        </IconButton>
+        <Card
+          sx={{
+            p: 3,
+            display: showFilter ? "content" : "none",
+            position: "absolute",
+            backgroundColor: "#fff",
+            border: 2,
+            borderColor: "#ddd",
+            borderRadius: "2%",
+            top: "130px",
+            left: "50px",
+          }}
+        >
           <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
             Categories
           </Typography>
@@ -171,16 +197,25 @@ const Main = () => {
             categories={categories}
             onCheckboxChange={handleCheckboxChange}
           ></Filter>
-        </Box>
+        </Card>
 
-        <Grid container spacing={{ xs: 2 }}>
-          {displayedProducts?.map((p, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={index}>
-              <Item item={p}></Item>
-            </Grid>
-          ))}
-        </Grid>
+        <Box
+          display="flex"
+          justifyContent="end"
+          alignItems="center"
+          sx={{ m: 2 }}
+        >
+          <Search onSearchChange={handleSearchChange}></Search>{" "}
+          <Sort sortBy={sortBy} onSortChange={handleSortChange}></Sort>
+        </Box>
       </Box>
+      <Grid container spacing={{ xs: 2 }}>
+        {displayedProducts?.map((p, index) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={index}>
+            <Item item={p}></Item>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };
