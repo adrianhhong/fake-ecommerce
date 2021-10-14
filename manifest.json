@@ -1,0 +1,8 @@
+{
+  "short_name": "Fake E-Commerce",
+  "name": "Fake E-Commerce Store",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
