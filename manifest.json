@@ -1,6 +1,6 @@
 {
-  "short_name": "Fake E-Commerce",
-  "name": "Fake E-Commerce Store",
+  "short_name": "Fake E-commerce",
+  "name": "Fake E-commerce Site",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
