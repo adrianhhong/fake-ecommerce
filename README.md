@@ -13,7 +13,7 @@ https://adrianhhong.github.io/fake-ecommerce/
 - Search for a product
 - View user's cart
 - View user profile
-- Edit user profile (note: this does not update any database but does send a PATCH request and receive a response from the Fake Store API)
+- Edit user profile (note: this does not update any database but does send a PATCH request and receives a response from the Fake Store API)
 
 ## Installation and Usage
 

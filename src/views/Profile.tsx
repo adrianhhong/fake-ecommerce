@@ -98,9 +98,7 @@ const Profile = () => {
     const resProfile = await client.patchProfile(loggedInUser, profile);
     if (resProfile) {
       setSnackbarMessage(
-        `Successfully edited profile. This does not update any database, the response of the update is: ${JSON.stringify(
-          resProfile
-        )}`
+        `Updated profile (does not actually change database).`
       );
       setSnackbarIsOpen(true);
     }
