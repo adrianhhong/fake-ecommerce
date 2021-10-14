@@ -11,7 +11,7 @@ type Props = {
 
 const Sort: React.FC<Props> = ({ sortBy, onSortChange }) => {
   return (
-    <Box sx={{ maxWidth: 120 }}>
+    <Box sx={{ maxWidth: 300 }}>
       <FormControl fullWidth>
         <InputLabel>Sort By</InputLabel>
         <Select value={sortBy} label="Sort By" onChange={onSortChange}>
