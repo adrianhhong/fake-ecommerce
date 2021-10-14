@@ -9,8 +9,11 @@ import Item from "../components/item/Item";
 import ExtraAppBar from "../components/app-bar/ExtraAppBar";
 import Cart from "../components/cart/Cart";
 import Filter from "../components/filter/Filter";
+import Search from "../components/filter/Search";
+import Sort from "../components/filter/Sort";
 import { useState, useEffect } from "react";
 import { Grid, Drawer, Box, LinearProgress } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material/Select";
 
 const Main = () => {
   const loggedInUser = 1;
@@ -22,6 +25,8 @@ const Main = () => {
   const [displayedProducts, setDisplayedProducts] = useState<ProductType[]>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(false);
   const [isLoadingCart, setIsLoadingCart] = useState(false);
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("default");
 
   // Get allProducts, load allCategories
   useEffect(() => {
@@ -82,19 +87,6 @@ const Main = () => {
     setCartItems(mappedCartItems);
   }, [allProducts, cart]);
 
-  // Load displayedProducts
-  useEffect(() => {
-    const categoriesToDisplay = categories?.filter((c) => c.isSelected);
-    if (categoriesToDisplay?.length) {
-      const productsToDisplay = allProducts.filter((p) => {
-        return categoriesToDisplay.some((c) => c.category === p.category);
-      });
-      setDisplayedProducts(productsToDisplay);
-    } else {
-      setDisplayedProducts(allProducts); // Want to show everything when no categories are selected
-    }
-  }, [allProducts, categories]);
-
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newCategories = categories.map((c) => {
       if (c.category === event.target.value)
@@ -103,6 +95,36 @@ const Main = () => {
     });
     setCategories(newCategories);
   };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value.trim().toLowerCase());
+  };
+
+  const handleSortChange = (event: SelectChangeEvent) => {
+    setSortBy(event.target.value);
+  };
+
+  // Load displayedProducts by applying all filters
+  useEffect(() => {
+    // Apply category filter
+    const categoriesToDisplay = categories?.filter((c) => c.isSelected);
+    let productsCategoryFilter = allProducts;
+    if (categoriesToDisplay?.length) {
+      productsCategoryFilter = allProducts.filter((p) => {
+        return categoriesToDisplay.some((c) => c.category === p.category);
+      });
+    }
+    // Apply search filter
+    const productsSearchFilter = productsCategoryFilter.filter((p) => {
+      return p.title.toLowerCase().includes(search);
+    });
+    // Apply sort
+    if (sortBy === "priceAsc")
+      productsSearchFilter.sort((a, b) => a.price - b.price);
+    if (sortBy === "priceDes")
+      productsSearchFilter.sort((a, b) => b.price - a.price);
+    setDisplayedProducts(productsSearchFilter);
+  }, [allProducts, categories, search, sortBy]);
 
   return (
     <div>
@@ -134,6 +156,8 @@ const Main = () => {
         categories={categories}
         onCheckboxChange={handleCheckboxChange}
       ></Filter>
+      <Search onSearchChange={handleSearchChange}></Search>
+      <Sort sortBy={sortBy} onSortChange={handleSortChange}></Sort>
       <Grid container spacing={{ xs: 2 }}>
         {displayedProducts?.map((p, index) => (
           <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={index}>

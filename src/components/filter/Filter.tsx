@@ -19,7 +19,7 @@ const Cart: React.FC<Props> = ({ categories, onCheckboxChange }) => {
           component="div"
           sx={{ ml: 3, mt: 2 }}
         >
-          Filter
+          Categories
         </Typography>
         {categories.map((c) => (
           <FormControlLabel
