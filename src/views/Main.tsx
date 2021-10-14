@@ -21,7 +21,6 @@ import {
   Card,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Popover from "@mui/material/Popover";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { SelectChangeEvent } from "@mui/material/Select";
 
@@ -170,6 +169,7 @@ const Main = () => {
         sx={{ m: 2 }}
       >
         <IconButton
+          sx={{ ml: 1 }}
           size="large"
           edge="start"
           color="default"
@@ -186,8 +186,9 @@ const Main = () => {
             border: 2,
             borderColor: "#ddd",
             borderRadius: "2%",
-            top: "130px",
-            left: "50px",
+            top: "140px",
+            left: "57px",
+            zIndex: 1,
           }}
         >
           <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
@@ -209,13 +210,15 @@ const Main = () => {
           <Sort sortBy={sortBy} onSortChange={handleSortChange}></Sort>
         </Box>
       </Box>
-      <Grid container spacing={{ xs: 2 }}>
-        {displayedProducts?.map((p, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={index}>
-            <Item item={p}></Item>
-          </Grid>
-        ))}
-      </Grid>
+      <Box sx={{ pl: 2, pr: 2 }}>
+        <Grid container spacing={{ xs: 2 }}>
+          {displayedProducts?.map((p, index) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={index}>
+              <Item item={p}></Item>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </div>
   );
 };
