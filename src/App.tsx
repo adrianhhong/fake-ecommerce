@@ -1,6 +1,6 @@
 import Main from "./views/Main";
 import Profile from "./views/Profile";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
