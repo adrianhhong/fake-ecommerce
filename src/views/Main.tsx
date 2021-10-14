@@ -95,8 +95,6 @@ const Main = () => {
     }
   }, [allProducts, categories]);
 
-  const handleRemoveFromCart = () => {};
-
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newCategories = categories.map((c) => {
       if (c.category === event.target.value)
@@ -130,10 +128,7 @@ const Main = () => {
             <LinearProgress />
           </Box>
         )}
-        <Cart
-          cartItems={cartItems}
-          removeFromCart={handleRemoveFromCart}
-        ></Cart>
+        <Cart cartItems={cartItems}></Cart>
       </Drawer>
       <Filter
         categories={categories}

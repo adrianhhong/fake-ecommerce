@@ -6,7 +6,7 @@ const BasicAppBar = () => {
   return (
     <>
       <Link to="/">
-        <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
+        <IconButton size="large" edge="start" color="default" sx={{ mr: 2 }}>
           <StorefrontIcon />
         </IconButton>
       </Link>

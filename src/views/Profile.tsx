@@ -8,12 +8,14 @@ import {
   Button,
   Toolbar,
   LinearProgress,
+  Fab,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import BasicAppBar from "../components/app-bar/BasicAppBar";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 const Profile = () => {
   const loggedInUser = 1;
@@ -148,114 +150,157 @@ const Profile = () => {
           <LinearProgress />
         </Box>
       )}
-      <Link to="/">
-        <Button color="inherit">Return to Home</Button>
-      </Link>
-      <TextField
-        onChange={handleOnNameChange}
-        id="firstname"
-        label="First Name"
-        name="firstname"
-        value={profile.name.firstname}
-        variant="outlined"
-        disabled={!isEditMode}
-        fullWidth
-      />
-      <TextField
-        onChange={handleOnNameChange}
-        id="lastname"
-        label="Last Name"
-        name="lastname"
-        value={profile.name.lastname}
-        variant="outlined"
-        disabled={!isEditMode}
-        fullWidth
-      />
-      <TextField
-        onChange={handleOnBasicChange}
-        id="email"
-        label="Email"
-        name="email"
-        value={profile.email}
-        variant="outlined"
-        disabled={!isEditMode}
-        fullWidth
-      />
-      <TextField
-        onChange={handleOnBasicChange}
-        id="username"
-        label="Username"
-        name="username"
-        value={profile.username}
-        variant="outlined"
-        disabled={!isEditMode}
-        fullWidth
-      />
-      <TextField
-        onChange={handleOnBasicChange}
-        id="password"
-        label="Password"
-        name="password"
-        value={profile.password}
-        variant="outlined"
-        disabled={!isEditMode}
-        fullWidth
-      />
-      <TextField
-        onChange={handleOnAddressChange}
-        id="number"
-        label="Number"
-        name="number"
-        value={profile.address.number}
-        variant="outlined"
-        disabled={!isEditMode}
-        fullWidth
-      />
-      <TextField
-        onChange={handleOnAddressChange}
-        id="street"
-        label="Street"
-        name="street"
-        value={profile.address.street}
-        variant="outlined"
-        disabled={!isEditMode}
-        fullWidth
-      />
-      <TextField
-        onChange={handleOnAddressChange}
-        id="city"
-        label="City"
-        name="city"
-        value={profile.address.city}
-        variant="outlined"
-        disabled={!isEditMode}
-        fullWidth
-      />
-      <TextField
-        onChange={handleOnAddressChange}
-        id="zipcode"
-        label="Zipcode"
-        name="zipcode"
-        value={profile.address.zipcode}
-        variant="outlined"
-        disabled={!isEditMode}
-        fullWidth
-      />
-      {!isEditMode && !isLoading && (
-        <Button color="inherit" onClick={() => setIsEditMode(true)}>
-          EDIT
-        </Button>
-      )}
-      {isEditMode && !isLoading && (
-        <Button color="inherit" onClick={handleSaveEdit}>
-          SAVE
-        </Button>
-      )}
-      {isEditMode && !isLoading && (
-        <Button color="inherit" onClick={handleCancelEdit}>
-          CANCEL
-        </Button>
-      )}
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <Box sx={{ width: "90%", m: 5 }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <Fab
+              variant="extended"
+              size="medium"
+              color="secondary"
+              aria-label="add"
+              sx={{ mb: 4, textTransform: "capitalize" }}
+            >
+              <ArrowBackIosNewIcon sx={{ mr: 1 }} />
+              Return
+            </Fab>
+          </Link>
+          <TextField
+            onChange={handleOnNameChange}
+            id="firstname"
+            label="First Name"
+            name="firstname"
+            value={profile.name.firstname}
+            variant="outlined"
+            disabled={!isEditMode}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            onChange={handleOnNameChange}
+            id="lastname"
+            label="Last Name"
+            name="lastname"
+            value={profile.name.lastname}
+            variant="outlined"
+            disabled={!isEditMode}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            onChange={handleOnBasicChange}
+            id="email"
+            label="Email"
+            name="email"
+            value={profile.email}
+            variant="outlined"
+            disabled={!isEditMode}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            onChange={handleOnBasicChange}
+            id="username"
+            label="Username"
+            name="username"
+            value={profile.username}
+            variant="outlined"
+            disabled={!isEditMode}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            onChange={handleOnBasicChange}
+            id="password"
+            label="Password"
+            name="password"
+            value={profile.password}
+            variant="outlined"
+            disabled={!isEditMode}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            onChange={handleOnAddressChange}
+            id="number"
+            label="Number"
+            name="number"
+            value={profile.address.number}
+            variant="outlined"
+            disabled={!isEditMode}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            onChange={handleOnAddressChange}
+            id="street"
+            label="Street"
+            name="street"
+            value={profile.address.street}
+            variant="outlined"
+            disabled={!isEditMode}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            onChange={handleOnAddressChange}
+            id="city"
+            label="City"
+            name="city"
+            value={profile.address.city}
+            variant="outlined"
+            disabled={!isEditMode}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            onChange={handleOnAddressChange}
+            id="zipcode"
+            label="Zipcode"
+            name="zipcode"
+            value={profile.address.zipcode}
+            variant="outlined"
+            disabled={!isEditMode}
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          {!isEditMode && !isLoading && (
+            <Fab
+              variant="extended"
+              size="medium"
+              color="primary"
+              aria-label="add"
+              sx={{ textTransform: "capitalize" }}
+              onClick={() => setIsEditMode(true)}
+            >
+              Edit
+            </Fab>
+          )}
+          {isEditMode && !isLoading && (
+            <Fab
+              variant="extended"
+              size="medium"
+              color="primary"
+              aria-label="add"
+              sx={{ mr: 2, textTransform: "capitalize" }}
+              onClick={handleSaveEdit}
+            >
+              Save
+            </Fab>
+          )}
+          {isEditMode && !isLoading && (
+            <Fab
+              variant="extended"
+              size="medium"
+              color="secondary"
+              aria-label="add"
+              sx={{ textTransform: "capitalize" }}
+              onClick={handleCancelEdit}
+            >
+              Cancel
+            </Fab>
+          )}
+        </Box>
+      </Box>
       <Snackbar
         open={snackbarIsOpen}
         onClose={handleClose}

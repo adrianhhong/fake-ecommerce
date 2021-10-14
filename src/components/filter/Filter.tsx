@@ -14,7 +14,11 @@ const Cart: React.FC<Props> = ({ categories, onCheckboxChange }) => {
         {categories.map((c) => (
           <FormControlLabel
             control={
-              <Checkbox onChange={onCheckboxChange} value={c.category} />
+              <Checkbox
+                onChange={onCheckboxChange}
+                value={c.category}
+                sx={{ width: 100 }}
+              />
             }
             label={c.category}
             key={c.category}

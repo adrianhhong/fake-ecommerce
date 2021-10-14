@@ -16,14 +16,14 @@ const ButtonAppBar: React.FC<Props> = ({ cartItems, clickCart }) => {
         <Toolbar>
           <BasicAppBar />
           <Link to="/profile">
-            <IconButton size="large" edge="start" color="inherit">
+            <IconButton size="large" edge="start" color="default">
               <AccountCircleIcon />
             </IconButton>
           </Link>
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
+            color="default"
             sx={{ ml: 1 }}
             onClick={clickCart}
           >
