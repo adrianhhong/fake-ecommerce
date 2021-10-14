@@ -19,7 +19,7 @@ const Search: React.FC<Props> = ({ onSearchChange }) => {
       >
         <SearchIcon sx={{ alignSelf: "flex-end", marginBottom: "5px" }} />
         <TextField
-          sx={{ width: "200px", margin: "5px" }}
+          sx={{ width: "130px", margin: "5px" }}
           onChange={onSearchChange}
           label="Search"
           variant="standard"

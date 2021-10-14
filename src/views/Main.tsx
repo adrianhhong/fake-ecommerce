@@ -162,54 +162,70 @@ const Main = () => {
         )}
         <Cart cartItems={cartItems}></Cart>
       </Drawer>
-      <Box
+      <Grid
+        container
+        spacing={{ xs: 2 }}
         display="flex"
         justifyContent="space-between"
         alignItems="center"
         sx={{ m: 2 }}
       >
-        <IconButton
-          sx={{ ml: 1 }}
-          size="large"
-          edge="start"
-          color="default"
-          onClick={() => setShowFilter(!showFilter)}
-        >
-          <FilterListIcon />
-        </IconButton>
-        <Card
-          sx={{
-            p: 3,
-            display: showFilter ? "content" : "none",
-            position: "absolute",
-            backgroundColor: "#fff",
-            border: 2,
-            borderColor: "#ddd",
-            borderRadius: "2%",
-            top: "140px",
-            left: "57px",
-            zIndex: 1,
-          }}
-        >
-          <Typography variant="subtitle1" component="div" sx={{ flexGrow: 1 }}>
-            Categories
-          </Typography>
-          <Filter
-            categories={categories}
-            onCheckboxChange={handleCheckboxChange}
-          ></Filter>
-        </Card>
-
-        <Box
-          display="flex"
-          justifyContent="end"
-          alignItems="center"
-          sx={{ m: 2 }}
-        >
-          <Search onSearchChange={handleSearchChange}></Search>{" "}
-          <Sort sortBy={sortBy} onSortChange={handleSortChange}></Sort>
-        </Box>
-      </Box>
+        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+          <Box
+            display="flex"
+            justifyContent="start"
+            alignItems="center"
+            sx={{ m: 2 }}
+          >
+            <IconButton
+              sx={{ ml: 1, mt: 2 }}
+              size="large"
+              edge="start"
+              color="default"
+              onClick={() => setShowFilter(!showFilter)}
+            >
+              <FilterListIcon />
+            </IconButton>
+            <Search onSearchChange={handleSearchChange}></Search>
+          </Box>
+          <Card
+            sx={{
+              p: 3,
+              display: showFilter ? "content" : "none",
+              position: "absolute",
+              backgroundColor: "#fff",
+              border: 2,
+              borderColor: "#ddd",
+              borderRadius: "2%",
+              top: "140px",
+              left: "57px",
+              zIndex: 100,
+            }}
+          >
+            <Typography
+              variant="subtitle1"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
+              Categories
+            </Typography>
+            <Filter
+              categories={categories}
+              onCheckboxChange={handleCheckboxChange}
+            ></Filter>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+          <Box
+            display="flex"
+            justifyContent="end"
+            alignItems="center"
+            sx={{ mr: 2 }}
+          >
+            <Sort sortBy={sortBy} onSortChange={handleSortChange}></Sort>
+          </Box>
+        </Grid>
+      </Grid>
       <Box sx={{ pl: 2, pr: 2 }}>
         <Grid container spacing={{ xs: 2 }}>
           {displayedProducts?.map((p, index) => (

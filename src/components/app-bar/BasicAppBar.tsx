@@ -10,7 +10,18 @@ const BasicAppBar = () => {
           <StorefrontIcon />
         </IconButton>
       </Link>
-      <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+      <Typography
+        variant="h6"
+        component="div"
+        sx={{
+          flexGrow: 1,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          display: "-webkit-box",
+          WebkitLineClamp: 1,
+          WebkitBoxOrient: "vertical",
+        }}
+      >
         Fake E-commerce Site
       </Typography>
     </>
